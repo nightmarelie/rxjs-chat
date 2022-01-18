@@ -14,3 +14,12 @@ export const getUsername = () => {
 
   return newUsername;
 };
+
+export const addUser = (id, username) => {
+  document
+    .querySelector(".users")
+    .insertAdjacentHTML(
+      "beforeend",
+      `<option value=${id}>${username}</option>`
+    );
+};

@@ -4,7 +4,6 @@ const {
   disconnect$,
   listenOnConnection,
 } = require("./connection");
-const { all } = require("express/lib/application");
 
 const PORT = 3000;
 
