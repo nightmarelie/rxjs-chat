@@ -1,5 +1,5 @@
 const { of, fromEvent } = require("rxjs");
-const { map, switchMap, mergeMap } = require("rxjs/operators");
+const { map, switchMap, mergeMap, takeUntil } = require("rxjs/operators");
 const io = require("socket.io");
 const server = require("./server");
 
@@ -19,7 +19,18 @@ const disconnect$ = connection$.pipe(
   )
 );
 
+const listenOnConnection = (event) =>
+  connection$.pipe(
+    mergeMap(({ io, client }) =>
+      fromEvent(client, event).pipe(
+        takeUntil(fromEvent(client, "disconnect")),
+        map((data) => ({ io, client, data }))
+      )
+    )
+  );
+
 module.exports = {
   connection$,
   disconnect$,
+  listenOnConnection,
 };
