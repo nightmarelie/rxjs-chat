@@ -43,3 +43,7 @@ emitOnConnection(sendMessage$)
     addMessage(username, message);
     socket.emit("chat message", { id, message });
   });
+
+listenOnConnection("chat message").subscribe(({ from, message }) => {
+  addMessage(from, message);
+});

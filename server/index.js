@@ -38,7 +38,7 @@ listenOnConnection("chat message").subscribe(({ client, data }) => {
 
   if (!id) return;
 
-  if (message == "everyone") {
+  if (id == "everyone") {
     client.broadcast.emit("chat message", { from, message });
   } else {
     client.broadcast.to(id).emit("chat message", { from, message });
