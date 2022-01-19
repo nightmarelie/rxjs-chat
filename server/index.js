@@ -32,6 +32,19 @@ listenOnConnection("save username").subscribe(({ io, client, data }) => {
   client.broadcast.emit("new user", { id, username });
 });
 
+listenOnConnection("chat message").subscribe(({ client, data }) => {
+  const { id, message } = data;
+  const from = client.username;
+
+  if (!id) return;
+
+  if (message == "everyone") {
+    client.broadcast.emit("chat message", { from, message });
+  } else {
+    client.broadcast.to(id).emit("chat message", { from, message });
+  }
+});
+
 disconnect$.subscribe((client) => {
   client.broadcast.emit("remove user", client.id);
 
