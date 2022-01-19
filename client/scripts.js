@@ -1,6 +1,15 @@
 import { of } from "rxjs";
+import { withLatestFrom } from "rxjs/operators";
 import { emitOnConnection, listenOnConnection } from "./connection";
-import { getUsername, addUser, clearUsers, removeUser } from "./utilities";
+import {
+  getUsername,
+  addUser,
+  clearUsers,
+  removeUser,
+  clearUserInput,
+  addMessage,
+} from "./utilities";
+import sendMessage$ from "./actions";
 
 const username$ = of(getUsername());
 
@@ -24,3 +33,13 @@ listenOnConnection("all users").subscribe((users) => {
 listenOnConnection("remove user").subscribe((id) => {
   removeUser(id);
 });
+
+emitOnConnection(sendMessage$)
+  .pipe(withLatestFrom(username$))
+  .subscribe(([{ socket, data }, username]) => {
+    const [message, id] = data;
+
+    clearUserInput();
+    addMessage(username, message);
+    socket.emit("chat message", { id, message });
+  });

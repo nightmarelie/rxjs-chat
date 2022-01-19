@@ -1,4 +1,4 @@
-const usersEl = document.querySelector(".users");
+const usersSelectEl = document.querySelector(".users");
 
 const getUsername = () => {
   const username = window.sessionStorage.getItem("username");
@@ -18,21 +18,44 @@ const getUsername = () => {
 };
 
 const addUser = (id, username) =>
-  usersEl.insertAdjacentHTML(
+  usersSelectEl.insertAdjacentHTML(
     "beforeend",
     `<option value=${id}>${username}</option>`
   );
 
-const clearUsers = () => (usersEl.innerHTML = "");
+const clearUsers = () => (usersSelectEl.innerHTML = "");
 
-const isUserExist = (id) => usersEl.querySelector(`option[value=${id}]`);
+const isUserExist = (id) => usersSelectEl.querySelector(`option[value=${id}]`);
 
 const removeUser = (id) => {
-  const optionEl = usersEl.querySelector(`option[value=${id}]`);
+  const optionEl = usersSelectEl.querySelector(`option[value=${id}]`);
 
   if (optionEl) {
-    usersEl.removeChild(optionEl);
+    usersSelectEl.removeChild(optionEl);
   }
 };
 
-export { getUsername, addUser, clearUsers, isUserExist, removeUser };
+const clearUserInput = () => {
+  document.querySelector(".input").value = "";
+};
+
+const addMessage = (username, message) => {
+  document
+    .querySelector(".messages")
+    .insertAdjacentHTML(
+      "beforeend",
+      `<li><span>${username}: </span>${message}</li>`
+    );
+
+  window.scrollTo(0, document.body.scrollHeight);
+};
+
+export {
+  getUsername,
+  addUser,
+  clearUsers,
+  isUserExist,
+  removeUser,
+  clearUserInput,
+  addMessage,
+};
