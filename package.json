@@ -5,7 +5,9 @@
   "author": "Oleksii Kryvtsov <nightmarelie@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "run:dev": "NODE_ENV=development nodemon server/index.js"
+    "run:dev": "NODE_ENV=development nodemon server/index.js",
+    "run:prod": "NODE_ENV=production node server/index.js",
+    "build": "parcel build client/index.html"
   },
   "dependencies": {
     "express": "^4.17.2",
