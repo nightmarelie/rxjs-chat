@@ -32,7 +32,9 @@ listenOnConnection("save username").subscribe(({ io, client, data }) => {
   client.broadcast.emit("new user", { id, username });
 });
 
-disconnect$.subscribe(({ client }) => {
+disconnect$.subscribe((client) => {
+  client.broadcast.emit("remove user", client.id);
+
   console.log(`disconnected: ${client.id}`);
 });
 

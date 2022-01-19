@@ -27,4 +27,12 @@ const clearUsers = () => (usersEl.innerHTML = "");
 
 const isUserExist = (id) => usersEl.querySelector(`option[value=${id}]`);
 
-export { getUsername, addUser, clearUsers, isUserExist };
+const removeUser = (id) => {
+  const optionEl = usersEl.querySelector(`option[value=${id}]`);
+
+  if (optionEl) {
+    usersEl.removeChild(optionEl);
+  }
+};
+
+export { getUsername, addUser, clearUsers, isUserExist, removeUser };
