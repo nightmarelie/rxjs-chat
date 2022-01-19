@@ -7,7 +7,18 @@ const {
 
 const PORT = 3000;
 
-connection$.subscribe(({ client }) => {
+connection$.subscribe(({ io, client }) => {
+  const allSockets = io.sockets.sockets;
+
+  const allUsers = Array.from(allSockets)
+    .map(([id, socket]) => ({
+      id,
+      username: socket.username,
+    }))
+    .filter(({ username }) => username);
+
+  client.emit("all users", allUsers);
+
   console.log(`connected: ${client.id}`);
 });
 

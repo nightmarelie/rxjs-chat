@@ -1,4 +1,6 @@
-export const getUsername = () => {
+const usersEl = document.querySelector(".users");
+
+const getUsername = () => {
   const username = window.sessionStorage.getItem("username");
 
   if (username) return username;
@@ -15,11 +17,14 @@ export const getUsername = () => {
   return newUsername;
 };
 
-export const addUser = (id, username) => {
-  document
-    .querySelector(".users")
-    .insertAdjacentHTML(
-      "beforeend",
-      `<option value=${id}>${username}</option>`
-    );
-};
+const addUser = (id, username) =>
+  usersEl.insertAdjacentHTML(
+    "beforeend",
+    `<option value=${id}>${username}</option>`
+  );
+
+const clearUsers = () => (usersEl.innerHTML = "");
+
+const isUserExist = (id) => usersEl.querySelector(`option[value=${id}]`);
+
+export { getUsername, addUser, clearUsers, isUserExist };
